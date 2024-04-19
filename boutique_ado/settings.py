@@ -46,7 +46,9 @@ INSTALLED_APPS = [
     'allauth.account', # app that allows basic user accounts
     'allauth.socialaccount', # support login in using social media accounts
 
+    # Project-specific apps
     'home',
+    'products',
 
 ]
 
