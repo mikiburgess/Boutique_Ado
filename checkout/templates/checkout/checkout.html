@@ -45,13 +45,14 @@
                                 {% if item.product.image %}
                                     <img src="{{ item.product.image.url }}" alt="{{ product.name }}" class="w-100">
                                 {% else %}
-                                    <img src="{{ MEDIA_URL}}noimage.png" alt="{{ product.name }}" class="w-100">
+                                    <img src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}" class="w-100">
                                 {% endif %}
                             </a>
                         </div>
-                        <div class="col-7"><p class="my-o"><strong>{{ item.product.name }}</strong></p>
+                        <div class="col-7">
+                            <p class="my-0"><strong>{{ item.product.name }}</strong></p>
                             <p class="my-0 small">Size: {% if item.product.has_sizes %}{{ item.size|upper }}{% else %}N/A{% endif %}</p>
-                            <div class="my-0 small text-muted">Qty: {{ item.quantity }}</div>
+                            <p class="my-0 small text-muted">Qty: {{ item.quantity }}</p>
                         </div>
                         <div class="col-3 text-right">
                             <p class="my-0 small text-muted">${{ item.product.price | calc_subtotal:item.quantity }}</p>
@@ -61,7 +62,7 @@
 
                 <hr class="my-0">
                 <!-- Cost Summary -->
-                <div class="rox text-black text-right">
+                <div class="row text-black text-right">
                     <div class="col-7 offset-2">
                         <p class="my-0">Order Total:</p>
                         <p class="my-0">Delivery:</p>
@@ -110,12 +111,13 @@
                     </fieldset>
                     
                     <!-- payment information  - stripe -->
-                    <fieldset class="rounded px-3">
+                    <fieldset class="px-3">
                         <legend class="fieldset-label small text-black px-2 w-auto">Payment</legend>
-                        <!-- For the Stripe care element -->
+                        <!-- A Stripe card element will go here -->
                         <div class="mb-3" id="card-element"></div>
-                        <!-- To display form errors -->
-                        <div class="mb3 text-danger" id="card-errors" role="alert"></div>
+
+                        <!-- Used to display form errors -->
+                        <div class="mb-3 text-danger" id="card-errors" role="alert"></div>
                     </fieldset>
 
                     <!-- Submit button -->
@@ -146,4 +148,11 @@
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block postloadjs %}
+    {{ block.super }}
+    {{ stripe_public_key|json_script:"id_stripe_public_key"}}
+    {{ client_secret|json_script:"id_client_secret"}}
+    <script src="{% static 'checkout/js/stripe_elements.js' %}"></script>
 {% endblock %}
