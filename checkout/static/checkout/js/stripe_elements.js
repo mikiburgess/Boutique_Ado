@@ -61,6 +61,9 @@ form.addEventListener('submit', function(ev) {
             card: card,
         }
     }).then(function(result) {  //  then execute function on the result
+        // if error, put error message into card error div, 
+        //  and re-enable the submit button to allow user to fix the issue
+        // otherwise, if the status of payment intent returns as 'succeeded', submit the form.
         if (result.error) {
             var errorDiv = document.getElementById('card-errors');
             var html = `
@@ -77,11 +80,5 @@ form.addEventListener('submit', function(ev) {
             }
         }
     });
-
-
-
-// if error, put error message into card error div, 
-//  and re-enable the submit button to allow user to fix the issue
-// otherwise, if the status of payment intent returns as 'succeeded', submit the form.
 });
 
