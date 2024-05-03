@@ -23,12 +23,11 @@ class OrderForm(forms.ModelForm):
             'full_name': 'Full Name',
             'email': 'Email Address',
             'phone_number': 'Phone Number',
-            'country': 'Country',
             'postcode': 'Postal code', 
             'town_or_city': 'Town or City', 
             'street_address1': 'Street Address 1', 
             'street_address2': 'Street Address 2',
-            'county': 'County',
+            'county': 'County, State or Locality',
         }
 
         # Start on Full Name field when page loads
@@ -36,10 +35,11 @@ class OrderForm(forms.ModelForm):
         # iterate through form fields adding * if required, adding custom placeholder, 
         #  add css for each field, and remove the default labels
         for field in self.fields:
-            if self.fields[field].required:
-                placeholder = f'{placeholders[field]} *'
-            else:
-                placeholder = f'{placeholders[field]}'
+            if field != 'country':
+                if self.fields[field].required:
+                    placeholder = f'{placeholders[field]} *'
+                else:
+                    placeholder = f'{placeholders[field]}'
             self.fields[field].widget.attrs['placeholder'] = placeholder
             self.fields[field].widget.attrs['class'] = 'stripe-style-input'
             self.fields[field].label = False
